@@ -1,0 +1,16 @@
+body{
+    background: #000;
+}
+
+
+.intro{
+    position:absolute;
+    top: auto;
+    left: 30vh;
+    max-width: 30vh;
+}
+
+
+.introduction { 
+    color: #E5E7EB;
+}
