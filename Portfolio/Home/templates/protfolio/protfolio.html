@@ -1,27 +1,559 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MRKC</title>
-   <link rel="stylesheet" href="{% static "Home/css/protfolio.css" %}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Shishir Khatri - Backend Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script src="{% static 'Home/js/protfolio.js' %}"> </script>
+    <link rel="stylesheet" href="{% static 'Home/css/protfolio.css' %}">
 </head>
 <body>
-    <div class="container">
-        <div class="pic_container"> 
-            <div class="profile-pic">
-                <img src="{% static "Home/images/mrkc.jpg" %}" alt="Shishir Khatri Profile Picture" onerror="this.style.display='none'; this.parentNode.innerHTML='Profile Photo';">
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+    
+    <!-- Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">SK</span>
+                <div class="logo-glow"></div>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link" data-text="Home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link" data-text="About">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#education" class="nav-link" data-text="Education">Education</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#skills" class="nav-link" data-text="Skills">Skills</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#projects" class="nav-link" data-text="Projects">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
+                </li>
+            </ul>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
+    </nav>
 
-        <div class="intro">
-            <h3>HI,</h3>
-            <h1 class="primary">My Name is Shishir Khatri. I am a Back-End Developer.</h1> 
-            <p>Based from : Nepal</p>      
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+            <div class="hero-shape shape-3"></div>
+            <div class="hero-shape shape-4"></div>
         </div>
-    </div>
+        <div class="hero-content">
+            <div class="hero-avatar">
+                <div class="avatar-ring"></div>
+                <div class="avatar-inner">
+                    <span>SK</span>
+                </div>
+                <div class="avatar-glow"></div>
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">
+                    <span class="title-word" data-text="Shishir">Shishir</span>
+                </span>
+                <span class="title-line">
+                    <span class="title-word" data-text="Khatri">Khatri</span>
+                </span>
+            </h1>
+            <div class="hero-subtitle">
+                <span class="typing-text"></span>
+                <span class="cursor-blink">|</span>
+            </div>
+            <p class="hero-description">
+                Passionate about building scalable APIs, automation tools, and IoT-powered systems that solve real-world problems through elegant backend solutions.
+            </p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">
+                    <span class="btn-text">View My Work</span>
+                    <div class="btn-bg"></div>
+                    <div class="btn-glow"></div>
+                </a>
+                <a href="#contact" class="btn btn-secondary">
+                    <span class="btn-text">Get In Touch</span>
+                    <div class="btn-bg"></div>
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span class="scroll-text">Scroll Down</span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">About Me</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text" data-aos="fade-right">
+                    <h3 class="about-title">My Journey</h3>
+                    <p>My journey into backend development began with a fascination for how systems work behind the scenes. I discovered my passion for creating robust, scalable solutions that power applications and automate complex processes.</p>
+                    <p>Specializing in Django and REST APIs, I've built systems that handle everything from user authentication to complex data processing. My work extends beyond traditional web development into the exciting world of IoT, where I integrate ESP32 microcontrollers with Python backends to create intelligent automation solutions.</p>
+                    <p>I believe in writing clean, maintainable code that not only solves today's problems but adapts to tomorrow's challenges. Every project is an opportunity to learn something new and push the boundaries of what's possible with backend technologies.</p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="50">0</div>
+                            <div class="stat-label">APIs Built</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="10">0</div>
+                            <div class="stat-label">IoT Projects</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="3">0</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual" data-aos="fade-left">
+                    <div class="code-window">
+                        <div class="window-header">
+                            <div class="window-controls">
+                                <span class="control close"></span>
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                            </div>
+                            <div class="window-title">backend_developer.py</div>
+                        </div>
+                        <div class="code-content">
+                            <div class="code-line">
+                                <span class="line-number">1</span>
+                                <span class="code-text"><span class="keyword">class</span> <span class="class-name">BackendDeveloper</span>:</span>
+                            </div>
+                            <div class="code-line">
+                                <span class="line-number">2</span>
+                                <span class="code-text">    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="param">self</span>):</span>
+                            </div>
+                            <div class="code-line">
+                                <span class="line-number">3</span>
+                                <span class="code-text">        <span class="param">self</span>.<span class="property">name</span> = <span class="string">"Shishir Khatri"</span></span>
+                            </div>
+                            <div class="code-line">
+                                <span class="line-number">4</span>
+                                <span class="code-text">        <span class="param">self</span>.<span class="property">skills</span> = [<span class="string">"Python"</span>, <span class="string">"Django"</span>, <span class="string">"IoT"</span>]</span>
+                            </div>
+                            <div class="code-line">
+                                <span class="line-number">5</span>
+                                <span class="code-text">        <span class="param">self</span>.<span class="property">passion</span> = <span class="string">"Building scalable solutions"</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section education-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Education</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot current"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-card">
+                            <div class="card-header">
+                                <h3>+2 Science</h3>
+                                <span class="timeline-date">2022 - 2024</span>
+                            </div>
+                            <p class="timeline-desc">Higher Secondary Education</p>
+                            <p class="timeline-focus">Focus: Physics, Chemistry, Mathematics, Computer Science</p>
+                            <div class="status-badge current">Currently Pursuing</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot completed"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-card">
+                            <div class="card-header">
+                                <h3>Secondary Education (SEE)</h3>
+                                <span class="timeline-date">2020 - 2022</span>
+                            </div>
+                            <p class="timeline-desc">Secondary School Certificate</p>
+                            <p class="timeline-focus">Strong foundation in Mathematics and Science</p>
+                            <div class="status-badge completed">Completed</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot ongoing"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-card">
+                            <div class="card-header">
+                                <h3>Self-Directed Learning</h3>
+                                <span class="timeline-date">2021 - Present</span>
+                            </div>
+                            <p class="timeline-desc">Backend Development & IoT</p>
+                            <div class="learning-tags">
+                                <span class="learning-tag">Python Programming</span>
+                                <span class="learning-tag">Django Framework</span>
+                                <span class="learning-tag">REST APIs</span>
+                                <span class="learning-tag">IoT Development</span>
+                                <span class="learning-tag">Database Design</span>
+                            </div>
+                            <div class="status-badge ongoing">Ongoing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section skills-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+                    <div class="skill-icon">
+                        <i class="fas fa-server"></i>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>Backend Development</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <i class="fab fa-python"></i>
+                            <span>Python</span>
+                            <div class="skill-level" data-level="90"></div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-globe"></i>
+                            <span>Django</span>
+                            <div class="skill-level" data-level="85"></div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>REST Framework</span>
+                            <div class="skill-level" data-level="80"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+                    <div class="skill-icon">
+                        <i class="fas fa-database"></i>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>Database</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <i class="fas fa-table"></i>
+                            <span>SQLite</span>
+                            <div class="skill-level" data-level="85"></div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-database"></i>
+                            <span>MySQL</span>
+                            <div class="skill-level" data-level="75"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+                    <div class="skill-icon">
+                        <i class="fas fa-tools"></i>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>DevOps & Tools</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <i class="fab fa-git-alt"></i>
+                            <span>Git</span>
+                            <div class="skill-level" data-level="80"></div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-docker"></i>
+                            <span>Docker</span>
+                            <div class="skill-level" data-level="70"></div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fab fa-linux"></i>
+                            <span>Linux</span>
+                            <div class="skill-level" data-level="75"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
+                    <div class="skill-icon">
+                        <i class="fas fa-microchip"></i>
+                        <div class="icon-glow"></div>
+                    </div>
+                    <h3>IoT & Cloud</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <i class="fas fa-fire"></i>
+                            <span>Firebase</span>
+                            <div class="skill-level" data-level="75"></div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-train"></i>
+                            <span>Railway</span>
+                            <div class="skill-level" data-level="70"></div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fas fa-microchip"></i>
+                            <span>ESP32</span>
+                            <div class="skill-level" data-level="80"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="project-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Bell Note</h3>
+                        <p>A comprehensive note-sharing platform built with Django REST Framework featuring role-based access control, user authentication, and real-time collaboration capabilities.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">REST API</span>
+                            <span class="tech-tag">SQLite</span>
+                            <span class="tech-tag">Authentication</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="project-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>IoT Automation Hub</h3>
+                        <p>An intelligent automation system that bridges ESP32 microcontrollers with Python backends, enabling remote control of servo motors and sensors through REST APIs.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">ESP32</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">REST API</span>
+                            <span class="tech-tag">IoT</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="project-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>API Gateway Service</h3>
+                        <p>A centralized API gateway built with Django that handles authentication, rate limiting, and request routing for multiple microservices in a distributed system.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">Redis</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">Microservices</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="project-icon">
+                            <i class="fas fa-stream"></i>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Data Processing Pipeline</h3>
+                        <p>An automated data processing pipeline that ingests, transforms, and analyzes large datasets using Python, with scheduled tasks and error handling mechanisms.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Celery</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">Automation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="section-line"></div>
+                <p class="section-description">Ready to discuss your next backend project? I'm always interested in challenging opportunities and innovative solutions.</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right">
+                    <h3>Let's Connect</h3>
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <a href="mailto:shishir@example.com">shishir@example.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>GitHub</h4>
+                                <a href="https://github.com/shishirkhatri" target="_blank">github.com/shishirkhatri</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>LinkedIn</h4>
+                                <a href="https://linkedin.com/in/shishirkhatri" target="_blank">linkedin.com/in/shishirkhatri</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-container" data-aos="fade-left">
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <input type="text" name="name" required>
+                            <label>Name</label>
+                            <div class="form-line"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" required>
+                            <label>Email</label>
+                            <div class="form-line"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="subject" required>
+                            <label>Subject</label>
+                            <div class="form-line"></div>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" rows="4" required></textarea>
+                            <label>Message</label>
+                            <div class="form-line"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="btn-text">Send Message</span>
+                            <div class="btn-bg"></div>
+                            <div class="btn-glow"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Shishir Khatri. Built with passion for backend development.</p>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
