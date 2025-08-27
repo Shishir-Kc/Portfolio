@@ -46,100 +46,10 @@
             overflow-x: hidden;
         }
 
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loading-content {
-            text-align: center;
-        }
-
-        .loading-logo {
-            position: relative;
-            margin-bottom: 2rem;
-        }
-
-        .logo-text {
-            font-size: 4rem;
-            font-weight: 900;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .loading-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            border: 3px solid transparent;
-            border-top: 3px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        .loading-text {
-            font-family: "JetBrains Mono", monospace;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .loading-bar {
-            width: 300px;
-            height: 4px;
-            background: var(--bg-secondary);
-            border-radius: 2px;
-            overflow: hidden;
-            margin: 0 auto;
-        }
-
-        .loading-progress {
-            height: 100%;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-            animation: loading 2s ease-in-out forwards;
-        }
-
-        @keyframes loading {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
         /* Main Content */
         .main-content {
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            opacity: 1; /* Always visible */
+            transition: none;
         }
 
         .main-content.visible {
@@ -329,6 +239,8 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: fadeInUp 1s ease-out;
+            /* Added fallback color for better mobile compatibility */
+            color: #8b5cf6;
         }
 
         .name-part:nth-child(2) {
@@ -1039,10 +951,6 @@
                 left: 0;
             }
 
-            .nav-toggle {
-                display: flex;
-            }
-
             .hero-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
@@ -1050,7 +958,10 @@
             }
 
             .hero-name {
-                font-size: 3rem;
+                /* Reduced font size for better mobile visibility */
+                font-size: 2.8rem;
+                line-height: 1.2;
+                margin-bottom: 1.5rem;
             }
 
             .hero-title {
@@ -1102,11 +1013,38 @@
             }
 
             .hero-name {
-                font-size: 2.5rem;
+                /* Further reduced font size and improved spacing for small screens */
+                font-size: 2.2rem;
+                line-height: 1.3;
+                margin-bottom: 1rem;
+                word-break: keep-all;
+                overflow-wrap: normal;
+            }
+
+            /* Added specific styling for name parts on mobile */
+            .name-part {
+                margin-bottom: 0.2rem;
+                /* Ensure gradient fallback works on mobile */
+                background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                /* Fallback for browsers that don't support background-clip */
+                color: #8b5cf6;
+            }
+
+            /* Added support check for gradient text */
+            @supports not (-webkit-background-clip: text) {
+                .name-part {
+                    background: none;
+                    color: #8b5cf6;
+                    -webkit-text-fill-color: initial;
+                }
             }
 
             .hero-title {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
+                margin-bottom: 1.5rem;
             }
 
             .profile-image {
@@ -1118,25 +1056,28 @@
                 display: none;
             }
         }
+
+        /* Added extra small screen optimization */
+        @media (max-width: 360px) {
+            .hero-name {
+                font-size: 2rem;
+                line-height: 1.4;
+            }
+            
+            .name-part {
+                font-size: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 1rem;
+            }
+        }
+
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-logo">
-                <div class="logo-text">SK</div>
-                <div class="loading-ring"></div>
-            </div>
-            <div class="loading-text">AAAyyyyoooooo whatssss upppp !...</div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
-            </div>
-        </div>
-    </div>
-
     <!-- Main Content -->
-    <div id="main-content" class="main-content">
+    <div id="main-content" class="main-content visible">
         <!-- Navigation -->
         <nav class="navbar" id="navbar">
             <div class="nav-container">
@@ -1183,7 +1124,7 @@
                         <span class="name-part">Khatri</span>
                     </h1>
                     <div class="hero-title">
-                        <span class="title-text">I create </span>
+                        <span class="title-text">I create </span> 
                         <span class="rotating-text">
                             <span class="text-item active">Digital Experiences</span>
                             <span class="text-item">AI Solutions</span>
@@ -1193,7 +1134,7 @@
                         </span>
                     </div>
                     <p class="hero-description">
-                        A passionate developer from Nepal 🇳🇵, crafting innovative solutions with AI, IoT, and Backend Servers. Currently studying +2 Science while building the future, one line of code at a time.
+                        Developer from Nepal , crafting innovative solutions with AI, IoT, and Backend Servers. Currently studying +2 Science while building the future, one line of code at a time.
                     </p>
                     <div class="hero-buttons">
                         <a href="#projects" class="btn btn-primary">
@@ -1223,7 +1164,7 @@
                 <div class="hero-visual">
                     <div class="profile-container">
                         <div class="profile-image">
-                            <img src="{% static 'Home/images/mrkc.jpg' %}" alt="Shishir Khatri">
+                            <img src="{% static 'Home/images/mrkc.jpeg' %}" alt="Shishir Khatri">
                             <div class="profile-glow"></div>
                             <div class="profile-ring"></div>
                         </div>
@@ -1270,19 +1211,12 @@
                     <div class="about-text">
                         <div class="text-block">
                             <h3>My Journey</h3>
-                            <p>I'm currently a +2 Science student at Shree Rastriya Secondary School, but my passion extends far beyond textbooks. I've been coding since I was young, creating everything from AI assistants to IoT systems.</p>
+                            <p>Currently Studying +2 Science at Shree Rastriya Secondary School , Just waiting till i complete +2 . hehehehe 😏 </p>
                         </div>
                         <div class="text-block">
                             <h3>What Drives Me</h3>
+                            <p> Simply BMW,</p>
                             <p>I believe technology should solve real problems and make life better. Whether it's building smart home systems with ESP32 or developing AI-powered applications, I'm always pushing the boundaries of what's possible.</p>
-                        </div>
-                        <div class="skills-preview">
-                            <div class="skill-tag">Python</div>
-                            <div class="skill-tag">Django</div>
-                            <div class="skill-tag">AI/ML</div>
-                            <div class="skill-tag">IoT</div>
-                         
-                            <div class="skill-tag">ESP32</div>
                         </div>
                     </div>
                     <div class="about-visual">
@@ -1319,7 +1253,7 @@
                                 <div class="code-line">
                                     <span class="line-number">4</span>
                                     <span class="code-text">
-                                        &nbsp;&nbsp;&nbsp;&nbsp;self.location = <span class="string">"Nepal 🇳🇵"</span>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;self.location = <span class="string">"Nepal"</span>
                                     </span>
                                 </div>
                                 <div class="code-line">
@@ -1363,31 +1297,33 @@
                                 </div>
                                 <div class="project-overlay">
                                     <div class="project-links">
-                                        <a href="#" class="project-link">
+                                        <a href="https://github.com/Shishir-Kc/sky" class="project-link">
                                             <i class="fab fa-github"></i>
                                         </a>
-                                        <a href="#" class="project-link">
+                                        {% comment %} <a href="#" class="project-link">
                                             <i class="fas fa-external-link-alt"></i>
-                                        </a>
+                                        </a> {% endcomment %}
                                     </div>
                                 </div>
                             </div>
                             <div class="project-content">
                                 <div class="project-header">
-                                    <h4 class="project-title">Skynet AI</h4>
+                                    <h4 class="project-title">Sky</h4>
                                     <div class="project-status active">
                                         <span class="status-dot"></span>
                                         <span>Active Development</span>
                                     </div>
                                 </div>
                                 <p class="project-description">
-                                    Advanced voice-based AI assistant with natural language processing, smart home integration, and predictive capabilities.
+                                    your personal Trainer,Teacher,Coder,Mentor,Your Friend !
                                 </p>
                                 <div class="project-tech">
                                     <span class="tech-tag">Python</span>
                                     <span class="tech-tag">TensorFlow</span>
                                     <span class="tech-tag">NLP</span>
-                                    <span class="tech-tag">Voice AI</span>
+                                    <span class="tech-tag">Lang-Chan</span>
+                                    <span class="tech-tag">Django</span>
+                                    <span class="tech-tag">DRF</span>
                                 </div>
                             </div>
                         </div>
@@ -1395,35 +1331,32 @@
                         <div class="project-card">
                             <div class="project-image">
                                 <div style="color: var(--accent-color); font-size: 3rem;">
-                                    <i class="fas fa-brain"></i>
+                                    <i class="fa-solid fa-money-check-dollar"></i>
                                 </div>
                                 <div class="project-overlay">
                                     <div class="project-links">
-                                        <a href="#" class="project-link">
+                                        <a href="https://github.com/Shishir-Kc/django-khalti-integration" class="project-link">
                                             <i class="fab fa-github"></i>
                                         </a>
-                                        <a href="#" class="project-link">
+                                        {% comment %} <a href="#" class="project-link">
                                             <i class="fas fa-external-link-alt"></i>
-                                        </a>
+                                        </a> {% endcomment %}
                                     </div>
                                 </div>
                             </div>
                             <div class="project-content">
                                 <div class="project-header">
-                                    <h4 class="project-title">Jarvis Assistant</h4>
+                                    <h4 class="project-title">Simple Docs For integrating Khalti with Django </h4>
                                     <div class="project-status active">
                                         <span class="status-dot"></span>
-                                        <span>Active</span>
+                                        <span>Active Development</span>
                                     </div>
                                 </div>
                                 <p class="project-description">
-                                    Python-powered virtual assistant with IoT device control, automation, and smart scheduling capabilities.
+                                    Find hard integrating payment gatewaty ? follow this steps to integrate it in Django ! 
                                 </p>
                                 <div class="project-tech">
                                     <span class="tech-tag">Python</span>
-                                    <span class="tech-tag">IoT</span>
-                                    <span class="tech-tag">Automation</span>
-                                    <span class="tech-tag">API</span>
                                 </div>
                             </div>
                         </div>
@@ -1579,7 +1512,7 @@
                             </div>
                             <div class="contact-details">
                                 <h4>Email</h4>
-                                <p>shishir@example.com</p>
+                                <p>kc.dev.py@gmail.com</p>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -1588,7 +1521,7 @@
                             </div>
                             <div class="contact-details">
                                 <h4>GitHub</h4>
-                                <p>github.com/shishir</p>
+                                <p>https://github.com/Shishir-Kc</p>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -1597,7 +1530,7 @@
                             </div>
                             <div class="contact-details">
                                 <h4>LinkedIn</h4>
-                                <p>linkedin.com/in/shishir</p>
+                                <p>https://www.linkedin.com/in/shishir-khatri-3bb3b1376/</p>
                             </div>
                         </div>
                     </div>
@@ -1716,15 +1649,6 @@
 
         // Initialize everything when DOM is loaded
         document.addEventListener("DOMContentLoaded", () => {
-            // Loading Screen
-            const loadingScreen = document.getElementById("loading-screen");
-            const mainContent = document.getElementById("main-content");
-
-            setTimeout(() => {
-                loadingScreen.classList.add("hidden");
-                mainContent.classList.add("visible");
-            }, 2500);
-
             // Initialize particle system
             const canvas = document.getElementById("particle-canvas");
             if (canvas) {
