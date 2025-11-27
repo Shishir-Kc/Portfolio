@@ -1,7 +1,2 @@
-__pycache__/
-*.py[cod]
-*.sqlite3
-.env/
-env/
-.venv/
+
 
