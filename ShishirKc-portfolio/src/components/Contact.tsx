@@ -1,7 +1,8 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Github, Linkedin } from 'lucide-react';
+
 
 export const Contact = () => {
     return (
@@ -31,21 +32,18 @@ export const Contact = () => {
                     className="flex flex-col md:flex-row items-center justify-center gap-6"
                 >
                     <a
-                        href="mailto:hello@example.com"
+                        href="mailto:kc.dev.py@gmail.com"
                         className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-medium hover:bg-neutral-200 transition-colors"
                     >
                         <Mail className="w-5 h-5" />
-                        <span>hello@example.com</span>
+                        <span>kc.dev.py@gmail.com</span>
                     </a>
 
                     <div className="flex gap-4">
-                        <a href="#" className="p-4 bg-neutral-900 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-800 transition-all">
-                            <Github className="w-5 h-5" />
+                        <a href="https://github.com/Shishir-Kc" className="p-4 bg-neutral-900 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-800 transition-all">
+                             <Github className="w-5 h-5" />
                         </a>
-                        <a href="#" className="p-4 bg-neutral-900 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-800 transition-all">
-                            <Twitter className="w-5 h-5" />
-                        </a>
-                        <a href="#" className="p-4 bg-neutral-900 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-800 transition-all">
+                        <a href="https://www.linkedin.com/in/shishir-khatri-3bb3b1376" className="p-4 bg-neutral-900 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-800 transition-all">
                             <Linkedin className="w-5 h-5" />
                         </a>
                     </div>

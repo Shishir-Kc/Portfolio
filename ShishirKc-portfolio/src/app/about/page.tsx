@@ -4,6 +4,8 @@ import { GrainOverlay } from '@/components/ui/GrainOverlay';
 import { MouseGlow } from '@/components/ui/MouseGlow';
 import { FloatingDockDemo } from '@/components/FloatingDockDemo';
 import { motion } from 'framer-motion';
+import { Github, Linkedin, Mail } from 'lucide-react';
+
 
 export default function AboutPage() {
   return (
@@ -31,14 +33,7 @@ export default function AboutPage() {
             >
               <h2 className="text-2xl font-semibold mb-4 text-neutral-200">The Story</h2>
               <p className="text-neutral-400 leading-relaxed text-lg">
-                I'm Shishir, a passionate Full Stack Developer with a knack for building immersive digital experiences.
-                My journey began with a curiosity for how things work on the web, which quickly turned into a career
-                crafting pixel-perfect applications.
-              </p>
-              <p className="text-neutral-400 leading-relaxed text-lg mt-4">
-                I specialize in the JavaScript ecosystem, leveraging the power of React, Next.js, and Node.js to build
-                scalable and performant web applications. I believe in the intersection of design and engineering,
-                where code meets creativity.
+                I'm a +2 Science student from Nepal with a strong passion for software, automation, and AI. Even during my early academic journey, I've created full-stack web apps, built AI assistants, and dived into IoT projects with microcontrollers like ESP32. I love to explore tech, break limits, and build things that feel like the future.
               </p>
             </motion.section>
 
@@ -51,15 +46,15 @@ export default function AboutPage() {
               <div className="space-y-6">
                 <div className="border-l-2 border-neutral-800 pl-6 relative">
                   <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-neutral-800 border-2 border-black" />
-                  <h3 className="text-xl font-medium text-white">Senior Frontend Developer</h3>
-                  <p className="text-sm text-neutral-500 mb-2">Tech Corp • 2022 - Present</p>
-                  <p className="text-neutral-400">Leading the frontend team in rebuilding the core product dashboard using Next.js and TypeScript.</p>
+                  <h3 className="text-xl font-medium text-white">Full Stack Developer</h3>
+                  <p className="text-sm text-neutral-500 mb-2">Shree Rastrya Mavi School • 2025 - Present</p>
+                  <p className="text-neutral-400">Building web application for School with various features.</p>
                 </div>
                 <div className="border-l-2 border-neutral-800 pl-6 relative">
                   <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-neutral-800 border-2 border-black" />
-                  <h3 className="text-xl font-medium text-white">Full Stack Developer</h3>
-                  <p className="text-sm text-neutral-500 mb-2">Creative Agency • 2020 - 2022</p>
-                  <p className="text-neutral-400">Developed award-winning marketing sites and e-commerce platforms for global brands.</p>
+                  <h3 className="text-xl font-medium text-white">Learning Phase</h3>
+                  <p className="text-sm text-neutral-500 mb-2">Self-taught • 2022 - Present</p>
+                  <p className="text-neutral-400">Learning and building projects to improve my skills.</p>
                 </div>
               </div>
             </motion.section>
@@ -74,17 +69,31 @@ export default function AboutPage() {
             <section>
               <h2 className="text-xl font-semibold mb-4 text-neutral-200">Connect</h2>
               <ul className="space-y-2 text-neutral-400">
-                <li><a href="#" className="hover:text-white transition-colors">Twitter</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">GitHub</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">LinkedIn</a></li>
-                <li><a href="mailto:hello@example.com" className="hover:text-white transition-colors">Email</a></li>
+                <li>
+                  <a href="https://github.com/Shishir-Kc" className="hover:text-white transition-colors flex items-center gap-2">
+                    <Github className="w-5 h-5" />
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.linkedin.com/in/shishir-khatri-3bb3b1376" className="hover:text-white transition-colors flex items-center gap-2">
+                    <Linkedin className="w-5 h-5" />
+                    LinkedIn
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:kc.dev.py@gmail.com" className="hover:text-white transition-colors flex items-center gap-2">
+                    <Mail className="w-5 h-5" />
+                    Email
+                  </a>
+                </li>
               </ul>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold mb-4 text-neutral-200">Skills</h2>
               <div className="flex flex-wrap gap-2">
-                {['React', 'Next.js', 'TypeScript', 'Node.js', 'Tailwind', 'Three.js', 'PostgreSQL', 'AWS'].map((skill) => (
+                {['Django', 'FastAPI', 'Docker', 'SQL', 'PostgreSQL', 'Redis'].map((skill) => (
                   <span key={skill} className="px-3 py-1 bg-neutral-900 border border-neutral-800 rounded-full text-sm text-neutral-400">
                     {skill}
                   </span>

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import { FloatingDockDemo } from '@/components/FloatingDockDemo';
-import { PixelatedCanvasDemo } from '@/components/PixelatedCanvasDemo';
 import { TechStack } from '@/components/TechStack';
 import { cn } from "@/lib/utils";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
@@ -10,104 +10,16 @@ import { ArrowUpRight, Mail, Github, Linkedin, Twitter } from "lucide-react";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { MouseGlow } from "@/components/ui/MouseGlow";
 import { Contact } from "@/components/Contact";
+import { HobbyPreloader } from "@/components/HobbyPreloader";
+
 
 
 
 // --- 3. SPOTLIGHT BENTO CARD ---
 // This card lights up specifically where your mouse hovers over it
-const SpotlightCard = ({ title, description, className, delay }: { title: string, description: string, className?: string, delay: number }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+import { SpotlightCard } from "@/components/SpotlightCard";
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
-    let { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
-      onMouseMove={handleMouseMove}
-      className={cn(
-        "group relative border border-neutral-800 bg-neutral-900/50 overflow-hidden rounded-3xl",
-        className
-      )}
-    >
-      {/* Hover Spotlight Effect */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-300 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
-              rgba(255, 255, 255, 0.15),
-              transparent 80%
-            )
-          `,
-        }}
-      />
-
-      <div className="relative h-full p-6">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-        <div className="flex h-full flex-col justify-between">
-          <div className="h-32 w-full rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-900 mb-4 border border-white/5 group-hover:scale-[1.02] transition-transform duration-500 shadow-xl" />
-          <div>
-            <h3 className="text-xl font-semibold text-white">{title}</h3>
-            <p className="text-sm text-neutral-400 mt-1">{description}</p>
-          </div>
-          {/* <div className="mt-4 flex items-center gap-2 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 duration-300">
-            View Project <ArrowUpRight className="h-3 w-3" />
-          </div> */}
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-const Spotlight = ({ className, fill = "white" }: { className?: string; fill?: string }) => {
-  return (
-    <svg
-      className={cn(
-        "animate-spotlight pointer-events-none absolute z-[1]  h-[169%] w-[138%] lg:w-[84%] opacity-0",
-        className
-      )}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 3787 2842"
-      fill="none"
-    >
-      <g filter="url(#filter)">
-        <ellipse
-          cx="1924.71"
-          cy="273.501"
-          rx="1924.71"
-          ry="273.501"
-          transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
-          fill={fill}
-          fillOpacity="0.21"
-        />
-      </g>
-      <defs>
-        <filter
-          id="filter"
-          x="0.860352"
-          y="0.838989"
-          width="3785.16"
-          height="2840.26"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_1065_8" />
-        </filter>
-      </defs>
-    </svg>
-  );
-};
+import { Spotlight } from "@/components/Spotlight";
 
 // --- Main Page ---
 
@@ -125,7 +37,10 @@ export default function Home() {
       </div>
 
       {/* Spotlight Effect (Top) */}
-      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+      {/* Spotlight Effect (Top) */}
+      <div className="absolute top-0 left-0 w-full h-screen overflow-hidden pointer-events-none">
+        <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
+      </div>
 
       {/* Animated Grid Background */}
       <div className="fixed inset-0 z-0 h-full w-full bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]">
@@ -137,18 +52,7 @@ export default function Home() {
       <section className="relative z-10 flex flex-col-reverse lg:flex-row min-h-screen items-center justify-center px-6 md:px-12 lg:px-24 gap-12 pt-20 lg:pt-0">
 
         <div className="flex-1 max-w-2xl text-center lg:text-left space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-neutral-300 backdrop-blur-md"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            Available for new projects
-          </motion.div>
+
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -156,9 +60,9 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight"
           >
-            Building <br />
+            Hi, I'm <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-neutral-100 to-neutral-600">
-              digital reality.
+              Shishir Khatri.
             </span>
           </motion.h1>
 
@@ -168,7 +72,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg md:text-xl text-neutral-400 max-w-xl mx-auto lg:mx-0 leading-relaxed"
           >
-            I'm a Full Stack Developer & Designer crafting pixel-perfect experiences with modern technologies.
+            I'm a Backend developer & AI enthusiast. Based in Nepal
           </motion.p>
 
           <motion.div
@@ -177,13 +81,17 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-wrap items-center justify-center lg:justify-start gap-4"
           >
-            <button className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-neutral-950 px-8 font-medium text-neutral-200 transition-all duration-300 hover:bg-neutral-900 hover:ring-2 hover:ring-neutral-800 hover:ring-offset-2 hover:ring-offset-black">
+            <button
+              onClick={() => {
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-neutral-950 px-8 font-medium text-neutral-200 transition-all duration-300 hover:bg-neutral-900 hover:ring-2 hover:ring-neutral-800 hover:ring-offset-2 hover:ring-offset-black"
+            >
               <span className="mr-2">See my work</span>
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
             </button>
             <div className="flex gap-4">
               <Github className="h-6 w-6 text-neutral-500 hover:text-white transition-colors cursor-pointer hover:scale-110" />
-              <Twitter className="h-6 w-6 text-neutral-500 hover:text-white transition-colors cursor-pointer hover:scale-110" />
               <Linkedin className="h-6 w-6 text-neutral-500 hover:text-white transition-colors cursor-pointer hover:scale-110" />
             </div>
           </motion.div>
@@ -196,8 +104,14 @@ export default function Home() {
           className="flex-1 flex items-center justify-center relative"
         >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-500/20 blur-[120px] rounded-full pointer-events-none" />
-          <div className="relative z-10">
-            <PixelatedCanvasDemo />
+          <div className="relative z-10 w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full overflow-hidden border-4 border-white/10 shadow-2xl shadow-indigo-500/20">
+            <Image
+              src="/image/mrkc.jpeg"
+              alt="Shishir Kc"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
         </motion.div>
       </section>
@@ -210,7 +124,7 @@ export default function Home() {
       </section>
 
       {/* Feature 3: Upgraded Interactive Bento Grid */}
-      <section className="relative z-10 py-32 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
+      <section id="projects" className="relative z-10 py-32 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -219,30 +133,54 @@ export default function Home() {
           Selected Works
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <SpotlightCard
-            title="E-Commerce Dashboard"
-            description="A full-stack analytics platform with real-time data."
-            className="md:col-span-2 md:row-span-2 min-h-[400px]"
+            title="Sky"
+            status="Active"
+            description="Ever wondered could you live 2 lives simlautaneously ? worry no more sky can be your digital persona and much more ! ."
+            tags={["Python", "TensorFlow", "NLP", "Lang-Chan", "Django", "DRF"]}
+            className="md:col-span-2"
             delay={0.1}
           />
           <SpotlightCard
-            title="AI Image Generator"
-            description="SaaS platform using Stable Diffusion."
-            className="md:col-span-1"
+            title="Atom"
+            status="Completed"
+            description="A Completely Wlan based Chat Application , just cli with custom custom encription algorithm. encripted end to end messages ."
+            tags={["Python", "IoT", "Socket", "Encryption"]}
+            className=""
             delay={0.2}
           />
           <SpotlightCard
-            title="Finance App Mobile"
-            description="React Native application for iOS/Android."
-            className="md:col-span-1"
+            title="Smart dusbin"
+            status="Completed"
+            description="Why to open the lid of the dustbin manually when you can do it automatically using an ultrasonic sensor and servo motor."
+            tags={["Ardunio", "Sensors", "Servo Motor", "C++"]}
+            className=""
             delay={0.3}
           />
           <SpotlightCard
-            title="Design System"
-            description="Open source component library."
-            className="md:col-span-3"
+            title="Jax"
+            status="Completed"
+            description="Bored of forcefully watching an Ad ? Worry no more jax is your solution with live music stream with friends and without ads. !"
+            tags={["Django", "DRF", "Django - webSocket"]}
+            className="md:col-span-2"
             delay={0.4}
+          />
+          <SpotlightCard
+            title="X"
+            status="Completed"
+            description="Ever wanted to controll your laptop with out using keyboard and mouse ? X is your solution with hand gesture recognition and voice commands."
+            tags={["Python", "Socket"]}
+            className=""
+            delay={0.5}
+          />
+          <SpotlightCard
+            title="Ghost"
+            status="Completed"
+            description="Ever wanted to controll your laptop with out using keyboard and mouse ? Ghost is your solution with AI Automation."
+            tags={["Python", "Socket"]}
+            className=""
+            delay={0.6}
           />
         </div>
       </section>
@@ -254,6 +192,7 @@ export default function Home() {
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
         <FloatingDockDemo />
       </div>
+      <HobbyPreloader />
     </main>
   );
 }

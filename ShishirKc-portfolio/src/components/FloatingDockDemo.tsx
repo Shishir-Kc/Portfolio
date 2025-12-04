@@ -8,6 +8,7 @@ import {
   IconExchange,
   IconHome,
   IconNewSection,
+  IconHeart,
 } from "@tabler/icons-react";
 
 // ⛑ Dynamically import the Lottie Player to avoid SSR issues
@@ -51,37 +52,22 @@ export function FloatingDockDemo() {
       href: "/about",
     },
     {
-      title: "Contact",
+      title: "Hobby",
       icon: (
-        <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+        <IconHeart className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "/#contact",
+      href: "/hobby",
     },
-    {
-      title: "GitHub",
-      icon: (
-        <div
-          onMouseEnter={() => githubRef.current?.play()}
-          onMouseLeave={() => githubRef.current?.stop()}
-          className="flex items-center justify-center w-full h-full"
-        >
-          <Player
-            // @ts-ignore
-            ref={githubRef}
-            src="/icons/github.json"
-            className="w-full h-full"
-            autoplay={false}
-            loop
-          />
-        </div>
-      ),
-      href: "https://github.com",
-    },
+
+
   ];
 
   return (
-    <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 dark">
-      <FloatingDock items={links} />
+    <div className="dark">
+      <FloatingDock
+        items={links}
+        desktopClassName="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50"
+      />
     </div>
   );
 }
