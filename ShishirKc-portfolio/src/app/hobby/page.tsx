@@ -96,7 +96,7 @@ export default function HobbyPage() {
                         >
                             <p>
                                 Books allow me to explore new worlds and perspectives.
-                                I particularly enjoy , which fuel my imagination.
+                                I particularly enjoy philosophy, which fuel my imagination.
                             </p>
                         </motion.div>
                     </div>
@@ -109,7 +109,7 @@ export default function HobbyPage() {
                             className="w-full h-full"
                         ></iframe>
                         <div className="absolute bottom-4 left-4 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 pointer-events-none">
-                            <p className="text-sm text-neutral-300">Sci-Fi & Fantasy</p>
+                            <p className="text-sm text-neutral-300">Philosophy</p>
                         </div>
                     </div>
                 </div>
