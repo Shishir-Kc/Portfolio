@@ -33,7 +33,9 @@ export default function AboutPage() {
             >
               <h2 className="text-2xl font-semibold mb-4 text-neutral-200">The Story</h2>
               <p className="text-neutral-400 leading-relaxed text-lg">
-                I'm a +2 Science student from Nepal with a strong passion for software, automation, and AI. Even during my early academic journey, I've created full-stack web apps, built AI assistants, and dived into IoT projects with microcontrollers like ESP32. I love to explore tech, break limits, and build things that feel like the future.
+                I&apos;m a developer who loves building things that live on the internet.
+                I&apos;ve been coding for a while now, and I&apos;m always looking for new
+                challenges.
               </p>
             </motion.section>
 

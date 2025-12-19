@@ -4,10 +4,7 @@ import React, { useRef } from "react";
 import dynamic from "next/dynamic";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import {
-  IconBrandX,
-  IconExchange,
   IconHome,
-  IconNewSection,
   IconHeart,
 } from "@tabler/icons-react";
 
@@ -19,8 +16,8 @@ const Player = dynamic(
 
 export function FloatingDockDemo() {
   // 1. Create a specific ref for the User animation
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userRef = useRef<any>(null);
-  const githubRef = useRef<any>(null);
 
   const links = [
     {
@@ -40,7 +37,7 @@ export function FloatingDockDemo() {
           className="flex items-center justify-center w-full h-full"
         >
           <Player
-            // @ts-ignore
+            // @ts-expect-error - Lottie player types are not perfect
             ref={userRef}
             src="/icons/user.json" // Your specific file path
             className="h-full w-full"

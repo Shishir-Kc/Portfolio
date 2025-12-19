@@ -1,13 +1,13 @@
+
 "use client";
 
 import React from "react";
 import { Spotlight } from "@/components/Spotlight";
-import { SpotlightCard } from "@/components/SpotlightCard";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { MouseGlow } from "@/components/ui/MouseGlow";
 import { FloatingDockDemo } from "@/components/FloatingDockDemo";
 import { motion } from "framer-motion";
-import Spline from '@splinetool/react-spline/next';
+
 
 export default function HobbyPage() {
     return (
@@ -39,7 +39,8 @@ export default function HobbyPage() {
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className="text-lg text-neutral-400 text-center max-w-2xl mx-auto mb-16"
                 >
-                   I enjoy exploring new worlds, both real and virtual.
+                    I&apos;m always looking for new book recommendations, so if you have
+                    any favorites, let me know!
                 </motion.p>
 
                 {/* Coding Section: Visual Left, Text Right */}
@@ -143,7 +144,7 @@ export default function HobbyPage() {
                             className="text-neutral-400 text-lg leading-relaxed space-y-4"
                         >
                             <p>
-                                There's so much to see in the world. I enjoy hiking, traveling,
+                                There&apos;s so much to see in the world. I enjoy hiking, traveling,
                                 and finding hidden gems in nature.
                             </p>
                         </motion.div>
@@ -167,7 +168,7 @@ export default function HobbyPage() {
                             className="text-neutral-400 text-lg leading-relaxed space-y-4"
                         >
                             <p>
-                                I've always been fascinated by the intersection of hardware and software.
+                                I&apos;ve always been fascinated by the intersection of hardware and software.
                                 Robotics represents the ultimate challenge in this space—bringing code to life
                                 in the physical world.
                             </p>
@@ -221,14 +222,14 @@ export default function HobbyPage() {
                             className="text-neutral-400 text-lg leading-relaxed space-y-4"
                         >
                             <p>
-                                Formula 1 is more than just racing; it's a high-speed chess match
+                                Formula 1 is more than just racing; it&apos;s a high-speed chess match
                                 played at 200mph. The engineering precision, strategy, and
                                 sheer skill of the drivers are unmatched.
                             </p>
                             <p>
-                                I'm a huge fan of Red Bull Racing. Watching the team push the
-                                boundaries of aerodynamics and performance every race weekend
-                                is incredibly inspiring for me as a developer who values optimization.
+                                I&apos;m a huge fan of movies and TV shows. I love watching new
+                                releases and discussing them with friends. I&apos;m also a big fan of
+                                classic cinema.
                             </p>
                         </motion.div>
                     </div>

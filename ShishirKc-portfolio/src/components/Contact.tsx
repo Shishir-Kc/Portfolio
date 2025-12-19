@@ -13,7 +13,7 @@ export const Contact = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     className="text-3xl md:text-5xl font-bold mb-8"
                 >
-                    Let's work together.
+                    Let&apos;s work together.
                 </motion.h2>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -21,8 +21,9 @@ export const Contact = () => {
                     transition={{ delay: 0.1 }}
                     className="text-lg text-neutral-400 mb-12 max-w-2xl mx-auto"
                 >
-                    I'm currently available for freelance projects and open to full-time opportunities.
-                    If you have a project that needs some creative touch, or just want to say hi, feel free to reach out!
+                    I&apos;m currently looking for new opportunities, my inbox is always open.
+                    Whether you have a question or just want to say hi, I&apos;ll try my best
+                    to get back to you!
                 </motion.p>
 
                 <motion.div
@@ -41,7 +42,7 @@ export const Contact = () => {
 
                     <div className="flex gap-4">
                         <a href="https://github.com/Shishir-Kc" className="p-4 bg-neutral-900 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-800 transition-all">
-                             <Github className="w-5 h-5" />
+                            <Github className="w-5 h-5" />
                         </a>
                         <a href="https://www.linkedin.com/in/shishir-khatri-3bb3b1376" className="p-4 bg-neutral-900 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-800 transition-all">
                             <Linkedin className="w-5 h-5" />

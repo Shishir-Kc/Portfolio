@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import Image from "next/image";
 import { FloatingDockDemo } from '@/components/FloatingDockDemo';
 import { TechStack } from '@/components/TechStack';
-import { cn } from "@/lib/utils";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
-import { ArrowUpRight, Mail, Github, Linkedin, Twitter } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Github, Linkedin } from "lucide-react";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { MouseGlow } from "@/components/ui/MouseGlow";
 import { Contact } from "@/components/Contact";
@@ -60,7 +59,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight"
           >
-            Hi, I'm <br />
+            Hi, I&apos;m <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-b from-neutral-100 to-neutral-600">
               Shishir Khatri.
             </span>
@@ -72,7 +71,8 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg md:text-xl text-neutral-400 max-w-xl mx-auto lg:mx-0 leading-relaxed"
           >
-            I'm a Backend developer & AI enthusiast. Based in Nepal
+            Hi, I&apos;m Shishir, a developer who loves building things that live on
+            the internet.
           </motion.p>
 
           <motion.div
