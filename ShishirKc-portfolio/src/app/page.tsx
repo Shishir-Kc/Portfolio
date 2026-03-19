@@ -17,20 +17,18 @@ interface Post {
   readingTime: string;
 }
 
-function getInitialPosts(): Post[] {
-  if (typeof window === 'undefined') return [];
-  try {
-    const cached = localStorage.getItem('vox_diurna_posts');
-    return cached ? JSON.parse(cached) : [];
-  } catch {
-    return [];
-  }
-}
-
 export default function Home() {
-  const [posts, setPosts] = useState<Post[]>(getInitialPosts);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
+    try {
+      const cached = localStorage.getItem('vox_diurna_posts');
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate cached posts on mount
+      if (cached) setPosts(JSON.parse(cached));
+    } catch {
+      // ignore corrupt cache
+    }
+
     fetch('https://vox-diurna-backend.onrender.com/api/v1/posts')
       .then(async (res) => {
         if (!res.ok) {
