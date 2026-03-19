@@ -55,14 +55,6 @@ export const metadata: Metadata = {
     description: "Building digital reality with modern technologies. Expert Backend Engineer in Nepal.",
     url: "https://shishirkhatri.com.np",
     siteName: "Shishir Kc Portfolio",
-    images: [
-      {
-        url: "https://shishirkhatri.com.np/image/mrkc.jpeg",
-        width: 1200,
-        height: 630,
-        alt: "Shishir Kc Portfolio",
-      },
-    ],
     locale: "en_US",
     type: "website",
   },
@@ -70,8 +62,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Shishir khatri | Backend Developer",
     description: "Building digital reality with modern technologies. Expert Backend Engineer in Nepal.",
-    images: ["https://shishirkhatri.com.np/image/mrkc.jpeg"],
- 
   },
 };
 

@@ -7,27 +7,37 @@ import { Spotlight } from "@/components/Spotlight";
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
 
+interface Post {
+  id: string;
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  category: string;
+  readingTime: string;
+}
+
+function getInitialPosts(): Post[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const cached = localStorage.getItem('vox_diurna_posts');
+    return cached ? JSON.parse(cached) : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>(getInitialPosts);
 
   useEffect(() => {
-    // Try to load cached posts first
-    const cachedPosts = localStorage.getItem('vox_diurna_posts');
-    if (cachedPosts) {
-      try {
-        setPosts(JSON.parse(cachedPosts));
-      } catch (e) {
-        console.error('Error parsing cached posts:', e);
-      }
-    }
-
     fetch('https://vox-diurna-backend.onrender.com/api/v1/posts')
       .then(async (res) => {
         if (!res.ok) {
           console.warn(`API responded with status: ${res.status}. Using cached data if available.`);
           return;
         }
-        const data = await res.json();
+        const data: Post[] = await res.json();
         setPosts(data);
         localStorage.setItem('vox_diurna_posts', JSON.stringify(data));
       })
@@ -182,7 +192,7 @@ export default function Home() {
             >
               <h2 className="text-2xl font-semibold mb-6 text-neutral-200">Recent Posts</h2>
               <div className="space-y-4">
-                {posts.length > 0 ? posts.map((post: any) => (
+                {posts.length > 0 ? posts.map((post) => (
                   <a
                     key={post.id}
                     href={`https://vox-diurna.pages.dev/blog/${post.slug}/${post.id}`}
