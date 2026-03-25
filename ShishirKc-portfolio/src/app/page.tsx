@@ -29,7 +29,7 @@ export default function Home() {
       // ignore corrupt cache
     }
 
-    fetch('https://vox-diurna-backend.onrender.com/api/v1/posts')
+    fetch('https://vox-diurna-backend-n0nw.onrender.com/api/v1/posts')
       .then(async (res) => {
         if (!res.ok) {
           console.warn(`API responded with status: ${res.status}. Using cached data if available.`);
