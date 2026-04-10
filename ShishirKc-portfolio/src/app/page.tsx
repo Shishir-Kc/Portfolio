@@ -4,74 +4,50 @@ import React, { useState, useEffect } from "react";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { MouseGlow } from "@/components/ui/MouseGlow";
 import { Spotlight } from "@/components/Spotlight";
+import { PostSkeleton } from "@/components/PostSkeleton";
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, ExternalLink } from 'lucide-react';
+import { projects } from "@/lib/data/projects";
+import { experiences } from "@/lib/data/experience";
+import type { Post } from "@/lib/data/posts";
 
-interface Post {
-  id: string;
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
-  category: string;
-  readingTime: string;
-}
+const POSTS_API = 'https://vox-diurna-backend-n0nw.onrender.com/api/v1/posts';
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     try {
       const cached = localStorage.getItem('vox_diurna_posts');
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate cached posts on mount
       if (cached) setPosts(JSON.parse(cached));
     } catch {
       // ignore corrupt cache
     }
 
-    fetch('https://vox-diurna-backend-n0nw.onrender.com/api/v1/posts')
+    fetch(POSTS_API)
       .then(async (res) => {
         if (!res.ok) {
           console.warn(`API responded with status: ${res.status}. Using cached data if available.`);
+          setLoading(false);
           return;
         }
         const data: Post[] = await res.json();
         setPosts(data);
+        setLoading(false);
         localStorage.setItem('vox_diurna_posts', JSON.stringify(data));
       })
-      .catch(err => {
-        console.warn('Network error or fetch failed. Using cached data if available.', err);
+      .catch(() => {
+        setLoading(false);
       });
   }, []);
 
-  const projects = [
-    {
-      name: "Vox_Diurna",
-      description: "A platform for uploading daily blogs to the internet via a custom blog server.",
-      github: "https://github.com/Shishir-Kc/Vox_Diurna",
-      live: "https://vox-diurna.pages.dev/"
-    },
-    {
-      name: "Hyper.backend",
-      description: "Backend for internal tool to be used by my team members.",
-      github: "https://github.com/Krypton-learn/Hyper.backend"
-    },
-    {
-      name: "Aris",
-      description: "A prototype operating system built from scratch.",
-      github: "https://github.com/Shishir-Kc/Aris"
-    },
-    {
-      name: "Extractro",
-      description: "An OCR-based tool that extracts text from various sources with high accuracy.",
-      github: "https://github.com/Shishir-Kc/extractro"
-    }
-  ];
-
   return (
     <main className="relative min-h-screen w-full bg-black text-white selection:bg-cyan-500/30 overflow-x-hidden">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-black focus:text-white">
+        Skip to content
+      </a>
 
-      {/* Background Features */}
       <GrainOverlay />
       <div className="fixed inset-0 z-0 pointer-events-none">
         <MouseGlow />
@@ -84,8 +60,7 @@ export default function Home() {
       </div>
       <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
 
-      {/* Content Section */}
-      <div className="relative z-10 container mx-auto px-6 py-24 md:py-32 max-w-6xl">
+      <div id="main-content" className="relative z-10 container mx-auto px-6 py-24 md:py-32 max-w-6xl">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -124,24 +99,14 @@ export default function Home() {
             >
               <h2 className="text-2xl font-semibold mb-4 text-neutral-200">Experience</h2>
               <div className="space-y-6">
-                <div className="border-l-2 border-neutral-800 pl-6 relative">
-                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-neutral-800 border-2 border-black" />
-                  <h3 className="text-xl font-medium text-white">CEO & Co-founder</h3>
-                  <p className="text-sm text-neutral-500 mb-2">Arcademia • 2026 - Present</p>
-                  <p className="text-neutral-400">Leading the vision and overall strategy of Arcademia.</p>
-                </div>
-                <div className="border-l-2 border-neutral-800 pl-6 relative">
-                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-neutral-800 border-2 border-black" />
-                  <h3 className="text-xl font-medium text-white">Full Stack Developer</h3>
-                  <p className="text-sm text-neutral-500 mb-2">Shree Rastrya Mavi School • 2025 - Present</p>
-                  <p className="text-neutral-400">Building web application for School with various features.</p>
-                </div>
-                <div className="border-l-2 border-neutral-800 pl-6 relative">
-                  <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-neutral-800 border-2 border-black" />
-                  <h3 className="text-xl font-medium text-white">Learning Phase</h3>
-                  <p className="text-sm text-neutral-500 mb-2">Self-taught • 2022 - Present</p>
-                  <p className="text-neutral-400">Learning and building projects to improve my skills.</p>
-                </div>
+                {experiences.map((exp, i) => (
+                  <div key={i} className="border-l-2 border-neutral-800 pl-6 relative">
+                    <div className="absolute -left-[9px] top-0 h-4 w-4 rounded-full bg-neutral-800 border-2 border-black" />
+                    <h3 className="text-xl font-medium text-white">{exp.title}</h3>
+                    <p className="text-sm text-neutral-500 mb-2">{exp.company} • {exp.period}</p>
+                    <p className="text-neutral-400">{exp.description}</p>
+                  </div>
+                ))}
               </div>
             </motion.section>
 
@@ -153,7 +118,14 @@ export default function Home() {
               <h2 className="text-2xl font-semibold mb-6 text-neutral-200">Projects</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {projects.map((project) => (
-                  <div key={project.name} className="group p-5 rounded-xl border border-neutral-800 bg-neutral-900/30 hover:bg-neutral-800/30 transition-all hover:border-neutral-700">
+                  <motion.div
+                    key={project.name}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3 }}
+                    className="group p-5 rounded-xl border border-neutral-800 bg-neutral-900/30 hover:bg-neutral-800/30 transition-all hover:border-neutral-700"
+                  >
                     <h3 className="text-lg font-medium text-white mb-2 leading-none">{project.name}</h3>
                     <p className="text-neutral-400 text-sm mb-4 line-clamp-2">{project.description}</p>
                     <div className="flex gap-4">
@@ -161,7 +133,7 @@ export default function Home() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-xs font-medium text-neutral-500 hover:text-white transition-colors"
+                        className="inline-flex items-center gap-2 text-xs font-medium text-neutral-500 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black rounded"
                       >
                         <Github className="w-3.5 h-3.5" />
                         Source
@@ -171,14 +143,14 @@ export default function Home() {
                           href={project.live}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-xs font-medium text-cyan-500 hover:text-cyan-400 transition-colors"
+                          className="inline-flex items-center gap-2 text-xs font-medium text-cyan-500 hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black rounded"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
                           Live Demo
                         </a>
                       )}
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.section>
@@ -196,7 +168,7 @@ export default function Home() {
                     href={`https://vox-diurna.pages.dev/blog/${post.slug}/${post.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block group p-5 rounded-xl border border-neutral-800 bg-neutral-900/30 hover:bg-neutral-800/30 transition-all hover:border-neutral-700"
+                    className="block group p-5 rounded-xl border border-neutral-800 bg-neutral-900/30 hover:bg-neutral-800/30 transition-all hover:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black"
                   >
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="text-lg font-medium text-white line-clamp-1">{post.title}</h3>
@@ -212,9 +184,14 @@ export default function Home() {
                       <span>{post.readingTime}</span>
                     </div>
                   </a>
-                )) : (
+                )) : loading ? (
+                  <>
+                    <PostSkeleton />
+                    <PostSkeleton />
+                  </>
+                ) : (
                   <div className="p-8 text-center rounded-xl border border-dashed border-neutral-800 text-neutral-500">
-                    Loading latest posts...
+                    No posts available
                   </div>
                 )}
               </div>
@@ -231,19 +208,19 @@ export default function Home() {
               <h2 className="text-xl font-semibold mb-6 text-neutral-200">Connect</h2>
               <ul className="space-y-4">
                 <li>
-                  <a href="https://github.com/Shishir-Kc" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors">
+                  <a href="https://github.com/Shishir-Kc" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
                     <Github className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
                     <span className="text-lg font-medium">GitHub</span>
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.linkedin.com/in/shishir-khatri-3bb3b1376" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors">
+                  <a href="https://www.linkedin.com/in/shishir-khatri-3bb3b1376" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
                     <Linkedin className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
                     <span className="text-lg font-medium">LinkedIn</span>
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:kc.dev.py@gmail.com" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors">
+                  <a href="mailto:kc.dev.py@gmail.com" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
                     <Mail className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
                     <span className="text-lg font-medium">Email</span>
                   </a>
@@ -254,11 +231,13 @@ export default function Home() {
               <h2 className="text-xl font-semibold mb-6 text-neutral-200">Links</h2>
               <ul className="space-y-4">
                 <li>
-                  <a href="https://arcademia.pages.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors">
+                  <a href="https://arcademia.pages.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
                     <ExternalLink className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
                     <span className="text-lg font-medium">Arcademia</span>
                   </a>
-                  <a href="https://vox-diurna.pages.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors">
+                </li>
+                <li>
+                  <a href="https://vox-diurna.pages.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
                     <ExternalLink className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
                     <span className="text-lg font-medium">Vox Diurna</span>
                   </a>
