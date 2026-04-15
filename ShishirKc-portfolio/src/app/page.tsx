@@ -11,7 +11,7 @@ import { projects } from "@/lib/data/projects";
 import { experiences } from "@/lib/data/experience";
 import type { Post } from "@/lib/data/posts";
 
-const POSTS_API = 'https://vox-diurna-backend-n0nw.onrender.com/api/v1/posts';
+const POSTS_API = 'https://blog.shishirkhatri.com.np/api/v1/posts';
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -19,7 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     try {
-      const cached = localStorage.getItem('vox_diurna_posts');
+      const cached = localStorage.getItem('blog_shishirkhatri_posts');
       if (cached) setPosts(JSON.parse(cached));
     } catch {
       // ignore corrupt cache
@@ -35,7 +35,7 @@ export default function Home() {
         const data: Post[] = await res.json();
         setPosts(data);
         setLoading(false);
-        localStorage.setItem('vox_diurna_posts', JSON.stringify(data));
+        localStorage.setItem('blog_shishirkhatri_posts', JSON.stringify(data));
       })
       .catch(() => {
         setLoading(false);
@@ -165,7 +165,7 @@ export default function Home() {
                 {posts.length > 0 ? posts.map((post) => (
                   <a
                     key={post.id}
-                    href={`https://vox-diurna.pages.dev/blog/${post.slug}/${post.id}`}
+                    href={`https://blog.shishirkhatri.com.np/blog/${post.slug}/${post.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block group p-5 rounded-xl border border-neutral-800 bg-neutral-900/30 hover:bg-neutral-800/30 transition-all hover:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black"
@@ -237,7 +237,7 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://vox-diurna.pages.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
+                  <a href="https://blog.shishirkhatri.com.np/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
                     <ExternalLink className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
                     <span className="text-lg font-medium">Vox Diurna</span>
                   </a>
