@@ -15,7 +15,7 @@ export const experiences: Experience[] = [
   {
     title: "Full Stack Developer",
     company: "Shree Rastrya Mavi School",
-    period: "2025 - Present",
+    period: "2025 - 2026",
     description: "Building web application for School with various features."
   },
   {

@@ -11,7 +11,7 @@ import { projects } from "@/lib/data/projects";
 import { experiences } from "@/lib/data/experience";
 import type { Post } from "@/lib/data/posts";
 
-const POSTS_API = 'https://blog.shishirkhatri.com.np/api/v1/posts';
+const POSTS_API = 'https://vox-diurnabackend.fastapicloud.dev/api/v1/posts';
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
