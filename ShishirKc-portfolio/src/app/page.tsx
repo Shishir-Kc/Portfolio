@@ -12,6 +12,7 @@ import { experiences } from "@/lib/data/experience";
 import type { Post } from "@/lib/data/posts";
 
 const POSTS_API = 'https://vox-diurnabackend.fastapicloud.dev/api/v1/posts';
+// const POSTS_API = 'http://127.0.0.1:8000/api/v1/posts';
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -20,7 +21,10 @@ export default function Home() {
   useEffect(() => {
     try {
       const cached = localStorage.getItem('blog_shishirkhatri_posts');
-      if (cached) setPosts(JSON.parse(cached));
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        setPosts(parsed.sort((a: Post, b: Post) => new Date(b.date).getTime() - new Date(a.date).getTime()));
+      }
     } catch {
       // ignore corrupt cache
     }
@@ -33,9 +37,10 @@ export default function Home() {
           return;
         }
         const data: Post[] = await res.json();
-        setPosts(data);
+        const sortedData = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setPosts(sortedData);
         setLoading(false);
-        localStorage.setItem('blog_shishirkhatri_posts', JSON.stringify(data));
+        localStorage.setItem('blog_shishirkhatri_posts', JSON.stringify(sortedData));
       })
       .catch(() => {
         setLoading(false);
@@ -162,7 +167,7 @@ export default function Home() {
             >
               <h2 className="text-2xl font-semibold mb-6 text-neutral-200">Recent Posts</h2>
               <div className="space-y-4">
-                {posts.length > 0 ? posts.map((post) => (
+                {posts.length > 0 ? posts.slice(0, 3).map((post) => (
                   <a
                     key={post.id}
                     href={`https://blog.shishirkhatri.com.np/blog/${post.slug}/${post.id}`}
@@ -185,16 +190,33 @@ export default function Home() {
                     </div>
                   </a>
                 )) : loading ? (
-                  <>
-                    <PostSkeleton />
-                    <PostSkeleton />
-                  </>
+                  [...Array(3)].map((_, i) => (
+                    <PostSkeleton key={i} />
+                  ))
                 ) : (
                   <div className="p-8 text-center rounded-xl border border-dashed border-neutral-800 text-neutral-500">
                     No posts available
                   </div>
                 )}
               </div>
+
+              {posts.length > 0 && (
+                <div className="mt-8 flex">
+                  <a
+                    href="https://blog.shishirkhatri.com.np/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-3 text-neutral-400 hover:text-white transition-all duration-300"
+                  >
+                    <span className="text-sm font-medium tracking-wide">
+                      Interested in what I talk about? Visit here
+                    </span>
+                    <div className="p-2 rounded-full border border-neutral-800 group-hover:border-neutral-700 bg-neutral-900/50 group-hover:bg-neutral-800/50 transition-colors">
+                      <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </div>
+                  </a>
+                </div>
+              )}
             </motion.section>
           </div>
 
@@ -234,6 +256,12 @@ export default function Home() {
                   <a href="https://arcademia.pages.dev/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
                     <ExternalLink className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
                     <span className="text-lg font-medium">Arcademia</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://helios.shishirkhatri.com.np/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
+                    <ExternalLink className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <span className="text-lg font-medium">Helios</span>
                   </a>
                 </li>
                 <li>

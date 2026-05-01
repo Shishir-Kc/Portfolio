@@ -13,6 +13,11 @@ export const projects: Project[] = [
     live: "https://vox-diurna.pages.dev/"
   },
   {
+    name: "Elysium",
+    description: "A FastAPI-based home server application with health monitoring, email automation, and AI chat capabilities.",
+    github: "https://github.com/Shishir-Kc/Elysium"
+  },
+  {
     name: "Hyper.backend",
     description: "Backend for internal tool to be used by my team members.",
     github: "https://github.com/Krypton-learn/Hyper.backend"
