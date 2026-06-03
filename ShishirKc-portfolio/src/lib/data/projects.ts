@@ -15,7 +15,8 @@ export const projects: Project[] = [
   {
     name: "Elysium",
     description: "A FastAPI-based home server application with health monitoring, email automation, and AI chat capabilities.",
-    github: "https://github.com/Shishir-Kc/Elysium"
+    github: "https://github.com/Shishir-Kc/Elysium",
+    live: "https://elysium.shishirkhatri.com.np/"
   },
   {
     name: "Hyper.backend",
