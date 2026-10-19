@@ -11,7 +11,7 @@ import { projects } from "@/lib/data/projects";
 import { experiences } from "@/lib/data/experience";
 import type { Post } from "@/lib/data/posts";
 
-const POSTS_API = 'https://vox-diurnabackend.fastapicloud.dev/api/v1/posts';
+const POSTS_API = 'https://api.blog.shishirkhatri.com.np/api/v1/posts';
 // const POSTS_API = 'http://127.0.0.1:8000/api/v1/posts';
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     try {
-      const cached = localStorage.getItem('blog_shishirkhatri_posts');
+      const cached = localStorage.getItem('blog_shishirkhatri_posts_v2');
       if (cached) {
         const parsed = JSON.parse(cached);
         setPosts(parsed.sort((a: Post, b: Post) => new Date(b.date).getTime() - new Date(a.date).getTime()));
@@ -40,7 +40,7 @@ export default function Home() {
         const sortedData = data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setPosts(sortedData);
         setLoading(false);
-        localStorage.setItem('blog_shishirkhatri_posts', JSON.stringify(sortedData));
+        localStorage.setItem('blog_shishirkhatri_posts_v2', JSON.stringify(sortedData));
       })
       .catch(() => {
         setLoading(false);
