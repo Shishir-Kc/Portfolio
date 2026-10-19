@@ -6,4 +6,5 @@ export interface Post {
   excerpt: string;
   category: string;
   readingTime: string;
+  image?: string | null;
 }

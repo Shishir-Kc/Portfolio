@@ -173,20 +173,33 @@ export default function Home() {
                     href={`https://blog.shishirkhatri.com.np/blog/${post.slug}/${post.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block group p-5 rounded-xl border border-neutral-800 bg-neutral-900/30 hover:bg-neutral-800/30 transition-all hover:border-neutral-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black"
+                    className="block group rounded-xl border border-neutral-800 bg-neutral-900/30 hover:bg-neutral-800/30 transition-all hover:border-neutral-700 overflow-hidden focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black"
                   >
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-lg font-medium text-white line-clamp-1">{post.title}</h3>
-                      <span className="text-xs text-neutral-500 whitespace-nowrap ml-4">
-                        {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                      </span>
-                    </div>
-                    <p className="text-neutral-400 text-sm mb-3 line-clamp-2">{post.excerpt}</p>
-                    <div className="flex items-center gap-3 text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">
-                      <span className="px-2 py-0.5 rounded-full border border-neutral-800 bg-neutral-800/50 text-neutral-400">
-                        {post.category}
-                      </span>
-                      <span>{post.readingTime}</span>
+                    {post.image && (
+                      <div className="aspect-[16/9] w-full overflow-hidden bg-neutral-800">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+                    <div className="p-5">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="text-lg font-medium text-white line-clamp-1">{post.title}</h3>
+                        <span className="text-xs text-neutral-500 whitespace-nowrap ml-4">
+                          {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </span>
+                      </div>
+                      <p className="text-neutral-400 text-sm mb-3 line-clamp-2">{post.excerpt}</p>
+                      <div className="flex items-center gap-3 text-[10px] uppercase tracking-wider text-neutral-500 font-semibold">
+                        <span className="px-2 py-0.5 rounded-full border border-neutral-800 bg-neutral-800/50 text-neutral-400">
+                          {post.category}
+                        </span>
+                        <span>{post.readingTime}</span>
+                      </div>
                     </div>
                   </a>
                 )) : loading ? (
