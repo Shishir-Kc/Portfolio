@@ -151,7 +151,7 @@ export default function Home() {
                           className="inline-flex items-center gap-2 text-xs font-medium text-cyan-500 hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-black rounded"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
-                          Live Demo
+                          {project.liveLabel ?? "Live Demo"}
                         </a>
                       )}
                     </div>
@@ -267,7 +267,7 @@ export default function Home() {
                 <li>
                   <a href="https://blog.shishirkhatri.com.np/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-neutral-400 hover:text-white transition-colors focus:outline-none focus:text-white">
                     <ExternalLink className="w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity" />
-                    <span className="text-lg font-medium">Vox Diurna</span>
+                    <span className="text-lg font-medium">Blogs</span>
                   </a>
                 </li>
               </ul>

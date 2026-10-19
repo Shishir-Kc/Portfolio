@@ -3,17 +3,42 @@ export interface Project {
   description: string;
   github: string;
   live?: string;
+  liveLabel?: string;
 }
 
 export const projects: Project[] = [
   {
-    name: "Vox_Diurna",
+    name: "IndexDB",
+    description: "A lightweight indexed database built from scratch. Currently under development.",
+    github: "https://github.com/Shishir-Kc/IndexDB"
+  },
+  {
+    name: "Koushin",
+    description: "A Python package published on PyPI.",
+    github: "https://github.com/Shishir-Kc/Koushin",
+    live: "https://pypi.org/project/koushin/",
+    liveLabel: "PyPI"
+  },
+  {
+    name: "Spark",
+    description: "An AI model served through the Helios platform.",
+    github: "https://github.com/Helios-4U/Spark",
+    live: "https://helios.shishirkhatri.com.np/models/spark"
+  },
+  {
+    name: "Ember",
+    description: "A tokenizer built for the Helios platform.",
+    github: "https://github.com/Helios-4U/Ember",
+    live: "https://helios.shishirkhatri.com.np/tokenizers"
+  },
+  {
+    name: "Blogs",
     description: "A platform for uploading daily blogs to the internet via a custom blog server.",
     github: "https://github.com/Shishir-Kc/Vox_Diurna",
     live: "https://vox-diurna.pages.dev/"
   },
   {
-    name: "Elysium",
+    name: "A.R.I.A",
     description: "A FastAPI-based home server application with health monitoring, email automation, and AI chat capabilities.",
     github: "https://github.com/Shishir-Kc/Elysium",
     live: "https://elysium.shishirkhatri.com.np/"
