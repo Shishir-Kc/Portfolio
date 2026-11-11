@@ -532,14 +532,14 @@ body {
   --sc-ink: #0a0a0a;
   --sc-ink-soft: #5c5c5c;
   margin-top: clamp(5rem, 10vw, 11rem);
-  padding: clamp(3.5rem, 7vw, 7rem) var(--sc-gutter) var(--sc-5);
+  padding: clamp(4rem, 8vw, 8rem) var(--sc-gutter) clamp(4.5rem, 9vw, 9rem);
   background: #dcdcdc;
   color: var(--sc-ink);
 }
 .p-close ::selection { background: #0a0a0a; color: #ececec; }
 .p-close :focus-visible { outline-color: #0a0a0a; }
 .p-close__title {
-  margin: clamp(2.5rem, 6vw, 6rem) 0 0;
+  margin: 0;
   max-width: 11em;
   font-size: clamp(3.2rem, 1rem + 10.5vw, 11.5rem);
   font-weight: 600;
@@ -575,18 +575,6 @@ body {
   .p-pill:hover { background: #0a0a0a; color: #ececec; }
   .p-pill--solid:hover { background: #2e2e2e; }
 }
-.p-close__foot {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--sc-3) var(--sc-5);
-  margin-top: clamp(4rem, 9vw, 9rem);
-  padding-top: var(--sc-4);
-  border-top: 1px solid rgb(0 0 0 / 0.16);
-  font-size: var(--sc-t-xs);
-  color: var(--sc-ink-soft);
-}
-
 /* ---------------------------------------------------------- small -- */
 @media (max-width: 760px) {
   .p-head { flex-direction: column; align-items: flex-start; gap: var(--sc-4); }
