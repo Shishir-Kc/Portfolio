@@ -20,4 +20,14 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    // Vendored React Bits components, kept close to upstream so they can be
+    // re-pulled. Their animation loops read refs in render and set state in
+    // effects on purpose; the compiler-era rules below flag that.
+    files: ["src/components/bits/**/*.{ts,tsx}"],
+    rules: {
+      "react-hooks/refs": "off",
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ]);
