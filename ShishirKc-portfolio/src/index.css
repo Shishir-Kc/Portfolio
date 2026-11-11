@@ -1,1 +1,606 @@
 @import "tailwindcss";
+/* The scrollcraft engine's floor and devices, vendored unchanged. In the base
+   layer so Tailwind utilities and the page's own rules below still win. */
+@import "./scrollcraft/scrollcraft.css" layer(base);
+
+@theme {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bebas Neue", "Oswald", Impact, sans-serif;
+
+  --color-night: #0a0a0a;
+}
+
+/* Scrollcraft tokens, below the hero: black and greys only, no colour accent.
+   Display type is the text face set large and tight, not the hero's Bebas. */
+:root {
+  color-scheme: dark;
+  --sc-canvas: #0a0a0a;
+  --sc-surface: #141414;
+  --sc-ink: #ececec;
+  --sc-ink-soft: #8c8c8c;
+  --sc-accent: #ffffff;
+  --sc-accent-ink: #0a0a0a;
+  --sc-font-display: "Geist Variable", system-ui, sans-serif;
+  --sc-font-text: "Geist Variable", system-ui, sans-serif;
+  --sc-font-mono: "Geist Variable", ui-monospace, monospace;
+  --sc-gutter: clamp(1.25rem, 3.2vw, 3.5rem);
+  --sc-maxw: 120rem;
+  --p-faint: #5e5e5e;
+  --p-line: #2a2a2a;
+  /* Sharp everywhere: no rounded corners, no circles. */
+  --sc-r-sm: 0;
+  --sc-r-md: 0;
+  --sc-r-lg: 0;
+  --sc-r-pill: 0;
+}
+
+body {
+  background: var(--color-night);
+  color: var(--sc-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * The hero scene is laid out on an implicit "stage" that covers the viewport
+ * and is anchored to its bottom edge. --stage-w is the stage width; every layer
+ * is sized and positioned in multiples of it, so the composition holds its
+ * shape at any screen size.
+ *   landscape: a 16:9 stage that covers the viewport (sides crop on narrow screens)
+ *   portrait:  a wider-than-square stage, so the scene stays big enough to read
+ *              while the person on the summit still fits across the screen
+ */
+.hero-stage {
+  --stage-w: max(100vw, 177.78svh);
+  /* How far the name's baseline sits below the summit (the peak's overlap). */
+  --name-cut: calc(var(--stage-w) * 0.045);
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .hero-stage {
+    --stage-w: max(100vw, 115svh);
+    /* The name wraps to two lines here; overlap less so no letter is lost. */
+    --name-cut: calc(var(--stage-w) * 0.012);
+  }
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.85);
+}
+
+
+/* ================================================== below the hero ==
+   An editorial page in black and greys: very large tight headings, small grey
+   notes, hairline rules, and one stack of cards. */
+
+/* --------------------------------------------------------- shared -- */
+.p-section { padding-block: clamp(4.5rem, 9vw, 10rem) 0; }
+.p-h2 {
+  margin: 0;
+  font-size: clamp(3.4rem, 1.4rem + 9vw, 10rem);
+  font-weight: 600;
+  line-height: 0.88;
+  letter-spacing: -0.058em;
+  color: var(--sc-ink);
+}
+.p-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sc-6);
+  margin-bottom: clamp(1.75rem, 3.5vw, 3.5rem);
+}
+.p-head__note {
+  flex: 0 1 17rem;
+  margin: 0 0 0.5em;
+  font-size: var(--sc-t-sm);
+  line-height: 1.45;
+  color: var(--sc-ink-soft);
+  text-wrap: pretty;
+}
+.p-label {
+  display: flex;
+  align-items: center;
+  gap: 0.65em;
+  margin: 0;
+  font-size: var(--sc-t-xs);
+  font-weight: 400;
+  color: var(--sc-ink-soft);
+}
+.p-label::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+}
+.p-arrow {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: translate 200ms var(--sc-ease-out);
+}
+.p-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--sc-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--p-faint);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 160ms var(--sc-ease-out), color 160ms var(--sc-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .p-link:hover { color: #fff; text-decoration-color: #fff; }
+  .p-link:hover .p-arrow, .p-pill:hover .p-arrow { translate: 2px -2px; }
+}
+
+/* ---------------------------------------------------------- about -- */
+.p-about { padding-block: clamp(5rem, 11vw, 11rem) clamp(3.5rem, 7vw, 7rem); }
+/* ScrollReveal (React Bits) fades and unblurs each word as the paragraph is
+   scrolled through; these rules only set the type. */
+.p-reveal.scroll-reveal {
+  margin: var(--sc-5) 0 0;
+  max-width: 23em;
+  font-size: clamp(1.55rem, 1rem + 2.5vw, 3.3rem);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.035em;
+  color: var(--sc-ink);
+}
+.p-reveal .scroll-reveal-text { font: inherit; line-height: inherit; }
+.p-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sc-6) clamp(1rem, 2.4vw, 2.5rem);
+  margin: clamp(3rem, 7vw, 7rem) 0 0;
+}
+.p-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-3);
+  padding-top: var(--sc-4);
+  border-top: 1px solid var(--p-line);
+}
+.p-stats dd {
+  margin: 0;
+  font-size: clamp(2.2rem, 1.3rem + 3vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  color: var(--sc-ink);
+}
+.p-stats dt {
+  max-width: 17ch;
+  font-size: var(--sc-t-xs);
+  line-height: 1.45;
+  color: var(--sc-ink-soft);
+}
+
+/* -------------------------------------------------------- marquee -- */
+/* ScrollVelocity (React Bits) moves the track; this sets the type and dots. */
+.p-marquee {
+  border-block: 1px solid var(--p-line);
+  padding-block: clamp(0.9rem, 1.6vw, 1.4rem);
+}
+.p-marquee__lane { position: relative; overflow: hidden; }
+.p-marquee__track {
+  display: flex;
+  white-space: nowrap;
+  font-size: clamp(1.4rem, 1rem + 1.7vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+  color: var(--sc-ink);
+}
+.p-marquee__track > span { flex-shrink: 0; }
+.p-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-inline: clamp(0.75rem, 1.6vw, 1.6rem);
+  vertical-align: middle;
+  background: var(--p-faint);
+}
+
+/* ----------------------------------------------------------- work -- */
+/* The deck is React Bits' ScrollStack: it pins each card one top-row lower
+   than the last and shrinks and dims the ones behind. A card is text on the
+   left and a picture on the right. */
+.p-stack .scroll-stack__inner { padding-inline: 0; }
+.p-stack .p-card {
+  height: auto;
+  padding: clamp(0.5rem, 0.8vw, 0.75rem);
+  border-radius: 0;
+  background: #121212;
+  color: var(--sc-ink);
+  box-shadow:
+    0 0 0 1px var(--p-line),
+    0 -22px 44px -18px rgb(0 0 0 / 0.75);
+}
+/* Crop-mark brackets on the four corners: a quiet frame that sharpens on
+   hover. --tick is registered so the colour can transition. */
+@property --tick {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #707070;
+}
+.p-stack .p-card::before {
+  --len: 16px;
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--tick), var(--tick)) top left / var(--len) 1px,
+    linear-gradient(var(--tick), var(--tick)) top left / 1px var(--len),
+    linear-gradient(var(--tick), var(--tick)) top right / var(--len) 1px,
+    linear-gradient(var(--tick), var(--tick)) top right / 1px var(--len),
+    linear-gradient(var(--tick), var(--tick)) bottom left / var(--len) 1px,
+    linear-gradient(var(--tick), var(--tick)) bottom left / 1px var(--len),
+    linear-gradient(var(--tick), var(--tick)) bottom right / var(--len) 1px,
+    linear-gradient(var(--tick), var(--tick)) bottom right / 1px var(--len);
+  background-repeat: no-repeat;
+  transition: --tick 260ms var(--sc-ease-out);
+}
+.p-card__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  gap: clamp(0.5rem, 0.8vw, 0.75rem);
+  min-height: clamp(26rem, 62svh, 38rem); /* six cards, each pinned 52px lower, must fit */
+}
+.p-card__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--sc-6);
+  padding: clamp(0.9rem, 1.6vw, 1.5rem) clamp(0.9rem, 1.8vw, 1.75rem) clamp(1rem, 2vw, 1.75rem);
+}
+.p-card__top {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sc-4);
+  font-size: var(--sc-t-xs);
+  font-variant-numeric: tabular-nums;
+}
+.p-card__num { color: var(--p-faint); }
+.p-card__status { color: var(--sc-ink-soft); }
+.p-card__name {
+  margin: 0;
+  font-size: clamp(2.6rem, 1.3rem + 3.7vw, 5.25rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.058em;
+  text-wrap: balance;
+}
+.p-card__line {
+  margin: var(--sc-4) 0 0;
+  max-width: 26em;
+  font-size: clamp(1.1rem, 0.95rem + 0.6vw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--sc-ink);
+  text-wrap: balance;
+}
+.p-card__about {
+  margin: var(--sc-4) 0 0;
+  max-width: 44ch;
+  font-size: var(--sc-t-sm);
+  line-height: 1.6;
+  color: var(--sc-ink-soft);
+  text-wrap: pretty;
+}
+.p-card__facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sc-4);
+  margin: var(--sc-6) 0 0;
+  padding-top: var(--sc-5);
+  border-top: 1px solid var(--p-line);
+}
+.p-card__facts dt { font-size: var(--sc-t-xs); color: var(--sc-ink-soft); }
+.p-card__facts dd { margin: var(--sc-1) 0 0; font-size: var(--sc-t-sm); color: var(--sc-ink); }
+.p-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin-top: var(--sc-6);
+  font-size: var(--sc-t-base);
+  font-weight: 500;
+  color: var(--sc-ink);
+  text-decoration: none;
+}
+.p-card__link::after { /* the link covers the whole card */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.p-card__link:focus-visible { outline: none; }
+.p-card__link:focus-visible::after { outline: 2px solid var(--sc-ink); outline-offset: -2px; }
+
+/* The picture: greyscale like the page, colour comes back on hover. */
+.p-card__media {
+  position: relative;
+  overflow: hidden;
+  background: #0a0a0a;
+  box-shadow: inset 0 0 0 1px var(--p-line);
+}
+.p-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: left top;
+  filter: grayscale(1) brightness(0.8) contrast(1.05);
+  transition: filter 500ms var(--sc-ease-out), scale 700ms var(--sc-ease-out);
+}
+.p-card__code {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  background: #0c0c0c;
+}
+.p-card__code figcaption {
+  padding: var(--sc-3) var(--sc-5);
+  border-bottom: 1px solid var(--p-line);
+  font-size: var(--sc-t-xs);
+  color: var(--sc-ink-soft);
+}
+.p-card__code pre {
+  flex: 1;
+  margin: 0;
+  padding: var(--sc-5);
+  overflow: hidden;
+  font: 400 clamp(0.72rem, 0.6rem + 0.35vw, 0.9rem) / 1.75 ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
+  color: #bdbdbd;
+  white-space: pre;
+}
+@media (hover: hover) and (pointer: fine) {
+  .p-stack .p-card:hover { box-shadow: 0 0 0 1px #3a3a3a, 0 -22px 44px -18px rgb(0 0 0 / 0.75); }
+  .p-stack .p-card:hover::before { --tick: #e6e6e6; }
+  .p-stack .p-card:hover .p-card__img { filter: none; scale: 1.02; }
+  .p-stack .p-card:hover .p-card__link .p-arrow { translate: 2px -2px; }
+}
+
+.p-more {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sc-5);
+  margin: 0;
+  font-size: var(--sc-t-lg);
+  letter-spacing: -0.02em;
+  color: var(--sc-ink-soft);
+}
+
+/* ---------------------------------------------------------- built -- */
+.p-list { list-style: none; margin: 0; padding: 0; position: relative; }
+.p-list li {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(2.25rem, 4vw, 4rem) 1fr auto;
+  align-items: baseline;
+  gap: var(--sc-4);
+  padding-block: clamp(1rem, 1.8vw, 1.6rem);
+}
+/* The list's top rule and each row's bottom rule. */
+.p-list::before, .p-list li::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 1px;
+  background: var(--p-line);
+  transform-origin: left center;
+}
+.p-list::before { top: 0; }
+.p-list li::after { bottom: 0; }
+.p-list__num { font-size: var(--sc-t-xs); color: var(--p-faint); font-variant-numeric: tabular-nums; }
+.p-list__what.scroll-reveal {
+  margin: 0;
+  font-size: clamp(1.5rem, 1rem + 2.1vw, 2.9rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+.p-list__what .scroll-reveal-text { font: inherit; line-height: inherit; }
+.p-list__where { font-size: var(--sc-t-sm); color: var(--sc-ink-soft); text-align: right; }
+/* Scroll-linked: each rule draws left to right and the row's labels fade in as
+   the row comes up the screen, in step with its line. Browsers without
+   scroll-driven animations show everything at rest. */
+@keyframes p-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes p-fade { from { opacity: 0; } to { opacity: 1; } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .p-list::before, .p-list li::after {
+      animation: p-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 100% cover 35%;
+    }
+    .p-list__num, .p-list__where {
+      animation: p-fade linear both;
+      animation-timeline: view();
+      animation-range: entry 60% cover 40%;
+    }
+  }
+}
+
+/* -------------------------------------------------------- writing -- */
+.j-writing__list { list-style: none; margin: 0; padding: 0; position: relative; }
+/* The list's top rule and every row's bottom rule draw left to right. */
+.j-writing__list::before, .j-post::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 1px;
+  background: var(--p-line);
+  transform-origin: left center;
+}
+.j-writing__list::before { top: 0; }
+.j-post { position: relative; }
+.j-post::after { bottom: 0; }
+.j-post a {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr auto;
+  align-items: baseline;
+  gap: var(--sc-5);
+  padding-block: clamp(1rem, 1.8vw, 1.6rem);
+  text-decoration: none;
+  color: var(--sc-ink);
+}
+.j-post__date, .j-post__meta {
+  font-size: var(--sc-t-sm);
+  color: var(--sc-ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.j-post__meta { display: inline-flex; align-items: center; gap: var(--sc-2); justify-self: end; white-space: nowrap; }
+.j-post__title.scroll-reveal {
+  margin: 0;
+  font-size: clamp(1.3rem, 1rem + 1.3vw, 2.1rem);
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.j-post__title .scroll-reveal-text {
+  font: inherit;
+  line-height: inherit;
+  transition: translate 220ms var(--sc-ease-out), color 160ms var(--sc-ease-out);
+}
+.j-post__arrow {
+  width: 0.9em;
+  height: 0.9em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  translate: -4px 4px;
+  transition: opacity 160ms var(--sc-ease-out), translate 200ms var(--sc-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .j-post a:hover .scroll-reveal-text { translate: 8px 0; color: #fff; }
+  .j-post a:hover .j-post__arrow { opacity: 1; translate: 0 0; }
+}
+.j-post a:focus-visible .j-post__arrow { opacity: 1; translate: 0 0; }
+
+/* Scroll-linked, like the Built list: each rule draws left to right and the
+   date and meta fade in as the row comes up the screen, in step with its
+   title. Browsers without scroll-driven animations show everything at rest. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .j-writing__list::before, .j-post::after {
+      animation: p-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 100% cover 35%;
+    }
+    .j-post__date, .j-post__meta {
+      animation: p-fade linear both;
+      animation-timeline: view();
+      animation-range: entry 60% cover 40%;
+    }
+  }
+}
+.j-post__placeholder {
+  display: block;
+  height: 1.4em;
+  margin-block: clamp(1rem, 1.8vw, 1.6rem);
+  width: 60%;
+  border-radius: var(--sc-r-sm);
+  background: color-mix(in oklab, var(--sc-ink) 7%, transparent);
+  font-size: clamp(1.3rem, 1rem + 1.3vw, 2.1rem);
+}
+
+/* ---------------------------------------------------------- close -- */
+/* The page turns over: a light grey sheet with black type slides up over the
+   dark page. */
+.p-close {
+  --sc-ink: #0a0a0a;
+  --sc-ink-soft: #5c5c5c;
+  margin-top: clamp(5rem, 10vw, 11rem);
+  padding: clamp(3.5rem, 7vw, 7rem) var(--sc-gutter) var(--sc-5);
+  background: #dcdcdc;
+  color: var(--sc-ink);
+}
+.p-close ::selection { background: #0a0a0a; color: #ececec; }
+.p-close :focus-visible { outline-color: #0a0a0a; }
+.p-close__title {
+  margin: clamp(2.5rem, 6vw, 6rem) 0 0;
+  max-width: 11em;
+  font-size: clamp(3.2rem, 1rem + 10.5vw, 11.5rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  text-wrap: balance;
+}
+.p-close__line { display: flex; }
+.p-close__line--soft { color: #8f8f8f; }
+.p-close__lede {
+  margin: var(--sc-6) 0 0;
+  max-width: 28ch;
+  font-size: var(--sc-t-lg);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--sc-ink-soft);
+}
+.p-close__links { display: flex; flex-wrap: wrap; gap: var(--sc-3); margin: var(--sc-6) 0 0; }
+.p-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.65em 1.2em;
+  border: 1px solid #0a0a0a;
+  font-size: var(--sc-t-sm);
+  font-weight: 500;
+  color: #0a0a0a;
+  text-decoration: none;
+  transition: background-color 180ms var(--sc-ease-out), color 180ms var(--sc-ease-out);
+}
+.p-pill--solid { background: #0a0a0a; color: #ececec; }
+@media (hover: hover) and (pointer: fine) {
+  .p-pill:hover { background: #0a0a0a; color: #ececec; }
+  .p-pill--solid:hover { background: #2e2e2e; }
+}
+.p-close__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--sc-3) var(--sc-5);
+  margin-top: clamp(4rem, 9vw, 9rem);
+  padding-top: var(--sc-4);
+  border-top: 1px solid rgb(0 0 0 / 0.16);
+  font-size: var(--sc-t-xs);
+  color: var(--sc-ink-soft);
+}
+
+/* ---------------------------------------------------------- small -- */
+@media (max-width: 760px) {
+  .p-head { flex-direction: column; align-items: flex-start; gap: var(--sc-4); }
+  .p-head__note { flex: none; max-width: 30ch; margin: 0; }
+  .p-stats { grid-template-columns: repeat(2, 1fr); }
+  .p-card__grid { grid-template-columns: 1fr; min-height: 0; }
+  .p-card__text { gap: var(--sc-5); }
+  .p-card__media { aspect-ratio: 16 / 10; order: 2; }
+  .p-card__about { display: none; } /* the subtitle carries it on a phone */
+  .p-card__facts { margin-top: var(--sc-5); padding-top: var(--sc-4); }
+  .p-card__link { margin-top: var(--sc-5); }
+  .p-more { flex-direction: column; gap: var(--sc-3); }
+  .p-list li { grid-template-columns: 1.75rem 1fr; }
+  .p-list__where { grid-column: 2; text-align: left; }
+  .j-post a { grid-template-columns: 1fr; gap: var(--sc-1); }
+  .j-post__meta { justify-self: start; }
+}
