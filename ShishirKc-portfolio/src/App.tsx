@@ -1,3 +1,11 @@
+import { Hero } from "@/components/Hero";
+import { Journey } from "@/components/Journey";
+
 export default function App() {
-  return <main className="min-h-screen" />;
+  return (
+    <main>
+      <Hero />
+      <Journey />
+    </main>
+  );
 }
