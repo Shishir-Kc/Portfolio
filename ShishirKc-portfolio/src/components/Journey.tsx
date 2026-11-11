@@ -258,7 +258,6 @@ export function Journey() {
 
       {/* 5 · Close: the page turns over, light on dark becomes dark on light. */}
       <footer data-sc-act="flow" className="p-close" aria-labelledby="still">
-        <p className="p-label">Open to hard problems</p>
         <h2 id="still" className="p-close__title">
           <BlurText text="Still climbing." className="p-close__line" animateBy="words" delay={90} />
           <BlurText text="Give me the hard problem." className="p-close__line p-close__line--soft" animateBy="words" delay={90} />
@@ -278,11 +277,6 @@ export function Journey() {
               </a>
             </Magnet>
           ))}
-        </div>
-        <div className="p-close__foot">
-          <span>© {new Date().getFullYear()} Shishir Khatri</span>
-          <span>Itahari, Nepal</span>
-          <a href="#top">Back to top</a>
         </div>
       </footer>
     </>
