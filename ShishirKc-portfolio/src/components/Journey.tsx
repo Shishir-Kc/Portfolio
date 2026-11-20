@@ -11,7 +11,7 @@ import { WorkStack, type Work } from "@/components/WorkStack";
 import github from "@/lib/data/github.json";
 import arcademiaShot from "@/assets/work/arcademia.webp";
 import ariaShot from "@/assets/work/aria.webp";
-import arisMark from "@/assets/work/aris.webp";
+import arisKatana from "@/assets/work/aris-katana.webp";
 import heliosShot from "@/assets/work/helios.webp";
 import kritrimMark from "@/assets/work/kritrim.webp";
 
@@ -89,7 +89,7 @@ const WORK: Work[] = [
       "It boots into a live Hyprland desktop and installs itself with a guided terminal installer. Underneath it stays plain Arch: official repositories, pacman and rolling releases.",
     facts: repoFacts("Aris"),
     link: repoLink("Aris"),
-    media: { type: "image", src: arisMark, alt: "The Aris logo, an open A with a star in its apex" },
+    media: { type: "image", src: arisKatana, alt: "An ink drawing of a katana at its guard, the blade engraved with kanji", position: "50% 50%" },
   },
   {
     name: "IndexDB",
